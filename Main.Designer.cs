@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             checkBoxRelativeMode = new CheckBox();
             richTextBoxLogger = new RichTextBox();
             checkBoxSymbolic = new CheckBox();
@@ -38,11 +39,11 @@
             openFileDialog1 = new OpenFileDialog();
             tableLayoutPanel2 = new TableLayoutPanel();
             label2 = new Label();
+            checkBoxForce = new CheckBox();
             tableLayoutPanel3 = new TableLayoutPanel();
             buttonSelectWorkdir = new Button();
             label3 = new Label();
             textBoxWorkdir = new TextBox();
-            checkBoxForce = new CheckBox();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
@@ -60,12 +61,15 @@
             // 
             // richTextBoxLogger
             // 
+            richTextBoxLogger.AllowDrop = true;
             richTextBoxLogger.Dock = DockStyle.Bottom;
             richTextBoxLogger.Location = new Point(0, 224);
             richTextBoxLogger.Name = "richTextBoxLogger";
             richTextBoxLogger.Size = new Size(334, 97);
             richTextBoxLogger.TabIndex = 1;
             richTextBoxLogger.Text = "";
+            richTextBoxLogger.DragDrop += TextBoxFile_DragDrop;
+            richTextBoxLogger.DragEnter += TextBoxFile_DragEnter;
             // 
             // checkBoxSymbolic
             // 
@@ -78,14 +82,19 @@
             checkBoxSymbolic.TabIndex = 0;
             checkBoxSymbolic.Text = "SYMLINK";
             checkBoxSymbolic.UseVisualStyleBackColor = true;
+            checkBoxSymbolic.CheckedChanged += CheckBoxSymbolic_CheckedChanged;
             // 
             // textBoxFile
             // 
+            textBoxFile.AllowDrop = true;
             textBoxFile.Dock = DockStyle.Fill;
             textBoxFile.Location = new Point(3, 20);
             textBoxFile.Name = "textBoxFile";
             textBoxFile.Size = new Size(289, 23);
             textBoxFile.TabIndex = 2;
+            textBoxFile.DragDrop += TextBoxFile_DragDrop;
+            textBoxFile.DragEnter += TextBoxFile_DragEnter;
+            textBoxFile.KeyDown += TextBoxFile_KeyDown;
             // 
             // buttonSelectFile
             // 
@@ -95,6 +104,7 @@
             buttonSelectFile.TabIndex = 3;
             buttonSelectFile.Text = "...";
             buttonSelectFile.UseVisualStyleBackColor = true;
+            buttonSelectFile.Click += ButtonSelectFile_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -155,6 +165,16 @@
             label2.TabIndex = 3;
             label2.Text = "Arguments";
             // 
+            // checkBoxForce
+            // 
+            checkBoxForce.AutoSize = true;
+            checkBoxForce.Location = new Point(3, 74);
+            checkBoxForce.Name = "checkBoxForce";
+            checkBoxForce.Size = new Size(268, 21);
+            checkBoxForce.TabIndex = 4;
+            checkBoxForce.Text = "Force recreate (excpet regular file/folder)";
+            checkBoxForce.UseVisualStyleBackColor = true;
+            // 
             // tableLayoutPanel3
             // 
             tableLayoutPanel3.ColumnCount = 2;
@@ -180,6 +200,7 @@
             buttonSelectWorkdir.TabIndex = 3;
             buttonSelectWorkdir.Text = "...";
             buttonSelectWorkdir.UseVisualStyleBackColor = true;
+            buttonSelectWorkdir.Click += ButtonSelectWorkdir_Click;
             // 
             // label3
             // 
@@ -192,25 +213,19 @@
             // 
             // textBoxWorkdir
             // 
+            textBoxWorkdir.AllowDrop = true;
             textBoxWorkdir.Dock = DockStyle.Fill;
             textBoxWorkdir.Location = new Point(3, 20);
             textBoxWorkdir.Name = "textBoxWorkdir";
             textBoxWorkdir.Size = new Size(289, 23);
             textBoxWorkdir.TabIndex = 2;
             textBoxWorkdir.Text = "./";
-            // 
-            // checkBoxForce
-            // 
-            checkBoxForce.AutoSize = true;
-            checkBoxForce.Location = new Point(3, 74);
-            checkBoxForce.Name = "checkBoxForce";
-            checkBoxForce.Size = new Size(268, 21);
-            checkBoxForce.TabIndex = 4;
-            checkBoxForce.Text = "Force recreate (excpet regular file/folder)";
-            checkBoxForce.UseVisualStyleBackColor = true;
+            textBoxWorkdir.DragDrop += TextBoxWorkdir_DragDrop;
+            textBoxWorkdir.DragEnter += TextBoxWorkdir_DragEnter;
             // 
             // Main
             // 
+            AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(334, 321);
@@ -218,6 +233,7 @@
             Controls.Add(tableLayoutPanel3);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(richTextBoxLogger);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Main";
             Text = "ln_win";
             DragDrop += TextBoxFile_DragDrop;
